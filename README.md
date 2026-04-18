@@ -12,7 +12,7 @@ CmdVoyager is a gamified developer tool that helps you save frequently used CLI 
 * 🔎 Fast search and tag-based filtering
 * ⭐ Favorite frequently used commands
 * 📊 Usage tracking (most used, recent)
-* 🎮 XP system (gamified experience)
+<!-- * 🎮 XP system (gamified experience) -->
 * 🛑 Duplicate command prevention
 * 🔐 API key-based backend protection
 * 🌌 Modern space-themed UI (React + Tailwind)
@@ -86,7 +86,7 @@ npm install
 ```env
 PORT=5000
 MONGO_URI=mongodb://127.0.0.1:27017/cmdvoyager
-API_KEY=cmdvoyager-secret-key
+API_KEY=
 ```
 
 ### Run backend
@@ -162,14 +162,14 @@ POST /api/commands/:id/interact
 }
 ```
 
----
+<!-- ---
 
 ## 🎮 XP System
 
 * +2 XP → Copy command
 * +1 XP → Favorite toggle
 * XP stored in database
-* Used for gamification (levels, progress)
+* Used for gamification (levels, progress) -->
 
 ---
 
