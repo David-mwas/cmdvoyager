@@ -59,7 +59,7 @@ export function CommandModal({ open, onClose, editing }) {
       <form
         onSubmit={handleSubmit}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-lg glass-card rounded-2xl p-6 glow-ring"
+        className="w-full max-w-lg glass-card rounded-2xl p-4 sm:p-6 glow-ring max-h-[90vh] overflow-y-auto"
       >
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-bold">
@@ -102,7 +102,7 @@ export function CommandModal({ open, onClose, editing }) {
             />
           </Field>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Field label="Category">
               <select
                 value={form.category}

@@ -53,9 +53,15 @@ function RootComponent() {
   return (
     <>
       <HeadContent />
-      <div className="relative z-10 min-h-screen">
+      {/* Dynamic Shooting Stars Background */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute top-[10%] right-[20%] w-[100px] h-[2px] bg-gradient-to-r from-transparent via-white to-white animate-shooting-star" style={{ animationDelay: '0s' }}></div>
+        <div className="absolute top-[30%] right-[10%] w-[100px] h-[2px] bg-gradient-to-r from-transparent via-white to-white animate-shooting-star" style={{ animationDelay: '3s' }}></div>
+        <div className="absolute top-[5%] right-[40%] w-[100px] h-[2px] bg-gradient-to-r from-transparent via-stardust to-stardust animate-shooting-star" style={{ animationDelay: '6s' }}></div>
+      </div>
+      <div className="relative z-10 min-h-screen overflow-x-hidden w-full">
         <Navbar />
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 py-8">
+        <main className="mx-auto max-w-7xl px-4 sm:px-6 py-4 sm:py-8 w-full max-w-full">
           <Outlet />
         </main>
       </div>

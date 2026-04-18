@@ -1,8 +1,8 @@
 export function StatsWidget({ icon: Icon, label, value, hint, accent = "primary" }) {
   return (
-    <div className="glass-card rounded-2xl p-5 relative overflow-hidden">
+    <div className="interactive-card rounded-2xl p-5 relative overflow-hidden group">
       <div
-        className="absolute -top-10 -right-10 h-32 w-32 rounded-full opacity-20 blur-2xl"
+        className="absolute -top-10 -right-10 h-32 w-32 rounded-full opacity-20 blur-2xl transition-all duration-700 group-hover:scale-150 group-hover:opacity-40"
         style={{ background: `var(--color-${accent})` }}
       />
       <div className="flex items-start justify-between mb-3 relative">
@@ -10,7 +10,7 @@ export function StatsWidget({ icon: Icon, label, value, hint, accent = "primary"
           {label}
         </div>
         <div
-          className="p-2 rounded-lg"
+          className="p-2 rounded-lg animate-pulse"
           style={{ background: `color-mix(in oklab, var(--color-${accent}) 15%, transparent)` }}
         >
           <Icon className="h-4 w-4" style={{ color: `var(--color-${accent})` }} />

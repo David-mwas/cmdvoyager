@@ -18,7 +18,7 @@ export function CommandCard({ cmd, onEdit }) {
   }
 
   return (
-    <div className="group relative glass-card rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 hover:glow-ring">
+    <div className="group relative interactive-card rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 hover:glow-ring">
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="min-w-0">
           <div className="flex items-center gap-2 mb-1">
@@ -44,8 +44,8 @@ export function CommandCard({ cmd, onEdit }) {
         </button>
       </div>
 
-      <div className="relative font-mono text-sm bg-background/60 border border-border rounded-lg p-3 mb-3 overflow-x-auto">
-        <code className="text-accent whitespace-pre">{cmd.command}</code>
+      <div className="relative font-mono text-sm bg-background/60 border border-border rounded-lg p-3 mb-3 overflow-x-auto w-full max-w-full">
+        <code className="text-accent whitespace-pre-wrap break-all inline-block min-w-full">{cmd.command}</code>
       </div>
 
       {cmd.description && (

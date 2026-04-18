@@ -37,12 +37,15 @@
   --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 
   --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 8s ease-in-out infinite;
   --animate-pulse-glow: pulseGlow 2.5s ease-in-out infinite;
   --animate-shimmer: shimmer 2s linear infinite;
+  --animate-star-drift: starDrift 60s linear infinite;
+  --animate-shooting-star: shootingStar 8s ease-in-out infinite;
 
   @keyframes float {
     0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-8px); }
   }
   @keyframes pulseGlow {
     0%, 100% { opacity: 0.6; box-shadow: 0 0 20px var(--glow); }
@@ -51,6 +54,16 @@
   @keyframes shimmer {
     0% { background-position: -200% 0; }
     100% { background-position: 200% 0; }
+  }
+  @keyframes starDrift {
+    from { background-position: 0 0; }
+    to { background-position: -200px 200px; }
+  }
+  @keyframes shootingStar {
+    0% { transform: translateX(0) translateY(0) rotate(45deg); opacity: 1; height: 2px; width: 0px; }
+    5% { width: 100px; opacity: 1; }
+    10% { transform: translateX(-500px) translateY(500px) rotate(45deg); opacity: 0; width: 0px; }
+    100% { transform: translateX(-500px) translateY(500px) rotate(45deg); opacity: 0; width: 0px; }
   }
 }
 
@@ -115,17 +128,35 @@
     position: fixed;
     inset: 0;
     background-image:
-      radial-gradient(1px 1px at 25% 30%, white, transparent),
+      radial-gradient(1.5px 1.5px at 25% 30%, white, transparent),
       radial-gradient(1px 1px at 60% 70%, white, transparent),
       radial-gradient(2px 2px at 80% 20%, white, transparent),
-      radial-gradient(1px 1px at 10% 80%, white, transparent),
+      radial-gradient(1.5px 1.5px at 10% 80%, white, transparent),
       radial-gradient(1px 1px at 90% 50%, white, transparent),
-      radial-gradient(1px 1px at 45% 15%, white, transparent),
-      radial-gradient(2px 2px at 35% 90%, white, transparent);
+      radial-gradient(2px 2px at 45% 15%, white, transparent),
+      radial-gradient(1px 1px at 35% 90%, white, transparent);
     background-size: 200px 200px;
-    opacity: 0.35;
+    opacity: 0.4;
     pointer-events: none;
     z-index: 0;
+    animation: starDrift 60s linear infinite;
+  }
+  
+  /* Additional star layer for parallax */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 15% 10%, white, transparent),
+      radial-gradient(1.5px 1.5px at 75% 80%, white, transparent),
+      radial-gradient(1px 1px at 40% 40%, white, transparent),
+      radial-gradient(2px 2px at 85% 60%, white, transparent);
+    background-size: 300px 300px;
+    opacity: 0.25;
+    pointer-events: none;
+    z-index: 0;
+    animation: starDrift 90s linear infinite reverse;
   }
 }
 
@@ -135,6 +166,35 @@
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-elegant);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+@utility interactive-card {
+  @apply glass-card;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-glow);
+  }
+
+  /* Spotlight effect overlay on hover */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, var(--color-glow) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
+  &:hover::after {
+    opacity: 0.15;
+  }
 }
 
 @utility glow-ring {

@@ -36,42 +36,27 @@ function Dashboard() {
   const topTags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]).slice(0, 8);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-[fadeIn_1s_ease-out]">
       {/* Hero */}
-      <section className="glass-card rounded-3xl p-8 relative overflow-hidden">
+      <section className="glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden animate-float-slow">
         <div className="absolute inset-0 bg-gradient-cosmic opacity-10" />
         <div className="relative flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/15 text-primary text-xs font-semibold mb-3">
-              <Sparkles className="h-3 w-3" /> Commander Console
+              <Sparkles className="h-3 w-3 animate-pulse" /> Commander Console
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
               Welcome back, <span className="text-gradient">Voyager</span>
             </h1>
             <p className="text-muted-foreground mt-2 max-w-lg">
               Your command galaxy is in orbit. Every command you copy fuels your XP — keep exploring.
             </p>
           </div>
-          {/* <div className="min-w-[260px] glass-card rounded-2xl p-4">
-             <div className="flex items-center justify-between mb-2 text-xs">
-              <span className="text-muted-foreground font-mono">LEVEL {level}</span>
-              <span className="text-stardust font-mono font-bold">{xp} XP</span>
-            </div> 
-            <div className="h-2 rounded-full bg-muted overflow-hidden">
-              <div
-                className="h-full bg-gradient-cosmic transition-all duration-700"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <div className="text-[10px] text-muted-foreground mt-2 font-mono">
-              {10 - (xp % 10)} XP to next level
-            </div>
-          </div> */}
         </div>
       </section>
 
       {/* Stats */}
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsWidget icon={Terminal} label="Commands" value={commands.length} hint="in your library" accent="primary" />
         <StatsWidget icon={Star} label="Favorites" value={favorites.length} hint="starred for liftoff" accent="stardust" />
         <StatsWidget icon={Flame} label="Total uses" value={totalUses} hint="copies fired" accent="nebula" />
@@ -79,13 +64,13 @@ function Dashboard() {
       </section>
 
       {/* Most used + Recent */}
-      <section className="grid lg:grid-cols-2 gap-6">
-        <div className="glass-card rounded-2xl p-6">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="glass-card rounded-2xl p-4 sm:p-6 transition-all duration-500 hover:glow-ring">
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-bold flex items-center gap-2">
-              <Flame className="h-4 w-4 text-nebula" /> Most used
+              <Flame className="h-4 w-4 text-nebula animate-pulse" /> Most used
             </h2>
-            <Link to="/commands" className="text-xs text-muted-foreground hover:text-foreground">
+            <Link to="/commands" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               View all →
             </Link>
           </div>
@@ -106,9 +91,9 @@ function Dashboard() {
           )}
         </div>
 
-        <div className="glass-card rounded-2xl p-6">
+        <div className="glass-card rounded-2xl p-4 sm:p-6 transition-all duration-500 hover:glow-ring">
           <h2 className="font-bold flex items-center gap-2 mb-4">
-            <Sparkles className="h-4 w-4 text-accent" /> Recently added
+            <Sparkles className="h-4 w-4 text-accent animate-pulse" /> Recently added
           </h2>
           {isLoading ? (
             <div className="space-y-2">
@@ -123,7 +108,7 @@ function Dashboard() {
               action={
                 <Link
                   to="/commands"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-cosmic text-primary-foreground font-medium"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-cosmic text-primary-foreground font-medium hover:opacity-90 transition-opacity"
                 >
                   <Plus className="h-4 w-4" /> Add command
                 </Link>
@@ -140,8 +125,10 @@ function Dashboard() {
       </section>
 
       {/* Tags */}
-      <section className="glass-card rounded-2xl p-6">
-        <h2 className="font-bold mb-4">Popular tags</h2>
+      <section className="glass-card rounded-2xl p-4 sm:p-6">
+        <h2 className="font-bold mb-4 flex items-center gap-2">
+          <Zap className="h-4 w-4 text-primary animate-pulse" /> Popular tags
+        </h2>
         {topTags.length === 0 ? (
           <p className="text-sm text-muted-foreground">Tag your commands to see them here.</p>
         ) : (
@@ -151,7 +138,7 @@ function Dashboard() {
                 key={tag}
                 to="/commands"
                 search={{ tag } as never}
-                className="px-3 py-1.5 rounded-full glass-card text-sm hover:glow-ring transition"
+                className="px-3 py-1.5 rounded-full interactive-card text-sm transition-all hover:scale-105"
               >
                 <span className="text-foreground">#{tag}</span>
                 <span className="ml-2 text-xs text-muted-foreground font-mono">{n}</span>
