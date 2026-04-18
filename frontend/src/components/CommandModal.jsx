@@ -56,20 +56,49 @@ export function CommandModal({ open, onClose, editing }) {
 
   if (!open) return null;
 
-  function addTag() {
-    const t = tagInput.trim().toLowerCase();
-    if (!t || form.tags.includes(t)) return;
-    setForm((f) => ({ ...f, tags: [...f.tags, t] }));
-    setTagInput("");
+  function handleTagInput(e) {
+    const val = e.target.value;
+    if (val.includes(",")) {
+      const newTags = val
+        .split(",")
+        .map((t) => t.trim().toLowerCase())
+        .filter((t) => t && !form.tags.includes(t));
+      if (newTags.length > 0) {
+        setForm((f) => ({ ...f, tags: [...f.tags, ...newTags] }));
+      }
+      setTagInput("");
+    } else {
+      setTagInput(val);
+    }
+  }
+
+  function handleTagKeyDown(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const t = tagInput.trim().toLowerCase();
+      if (t && !form.tags.includes(t)) {
+        setForm((f) => ({ ...f, tags: [...f.tags, t] }));
+      }
+      setTagInput("");
+    }
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!form.title.trim() || !form.command.trim()) return;
+
+    let finalTags = [...form.tags];
+    const pendingTag = tagInput.trim().toLowerCase();
+    if (pendingTag && !finalTags.includes(pendingTag)) {
+      finalTags.push(pendingTag);
+    }
+
+    const payload = { ...form, tags: finalTags };
+
     if (editing) {
-      await update.mutateAsync({ id: editing.id, patch: form });
+      await update.mutateAsync({ id: editing.id, patch: payload });
     } else {
-      await add.mutateAsync(form);
+      await add.mutateAsync(payload);
     }
     onClose();
   }
@@ -140,28 +169,14 @@ export function CommandModal({ open, onClose, editing }) {
               </select>
             </Field>
 
-            <Field label="Add tag">
-              <div className="flex gap-1">
-                <input
-                  value={tagInput}
-                  onChange={(e) => setTagInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      addTag();
-                    }
-                  }}
-                  placeholder="git, undo…"
-                  className="flex-1 px-3 py-2 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-ring"
-                />
-                <button
-                  type="button"
-                  onClick={addTag}
-                  className="px-2 rounded-lg border border-border hover:bg-muted/50"
-                >
-                  <Plus className="h-4 w-4" />
-                </button>
-              </div>
+            <Field label="Tags">
+              <input
+                value={tagInput}
+                onChange={handleTagInput}
+                onKeyDown={handleTagKeyDown}
+                placeholder="e.g. git, network, fix..."
+                className="w-full px-3 py-2 rounded-lg bg-input border border-border focus:outline-none focus:ring-2 focus:ring-ring"
+              />
             </Field>
           </div>
 
