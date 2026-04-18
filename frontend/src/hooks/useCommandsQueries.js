@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import {
   addCommand,
   deleteCommand,
@@ -34,7 +35,9 @@ export function useAddCommand() {
     mutationFn: addCommand,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: commandKeys.all });
+      toast.success("New command successfully charted! 🚀");
     },
+    onError: () => toast.error("Transmission failed. Could not save command.")
   });
 }
 
@@ -45,7 +48,9 @@ export function useUpdateCommand() {
     onSuccess: (_, vars) => {
       qc.invalidateQueries({ queryKey: commandKeys.all });
       qc.invalidateQueries({ queryKey: commandKeys.detail(vars.id) });
+      toast.success("Command data recalibrated! ✨");
     },
+    onError: () => toast.error("Calibration error. Update failed.")
   });
 }
 
@@ -55,7 +60,9 @@ export function useDeleteCommand() {
     mutationFn: deleteCommand,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: commandKeys.all });
+      toast.success("Command vaporized into the void! 💥");
     },
+    onError: () => toast.error("Force field active. Deletion failed.")
   });
 }
 
@@ -77,6 +84,7 @@ export function useToggleFavorite() {
     mutationFn: (id) => interactWithCommand(id, "favorite"),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: commandKeys.all });
+      toast.success("Added to favorites! ⭐");
     },
   });
 }

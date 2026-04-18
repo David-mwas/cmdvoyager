@@ -49,6 +49,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   notFoundComponent: NotFoundComponent,
 });
 
+import { Toaster } from "@/components/ui/sonner";
+
 function RootComponent() {
   return (
     <>
@@ -65,6 +67,7 @@ function RootComponent() {
           <Outlet />
         </main>
       </div>
+      <Toaster position="bottom-right" />
     </>
   );
 }

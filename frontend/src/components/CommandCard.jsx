@@ -1,6 +1,18 @@
 import { useState } from "react";
 import { Copy, Check, Star, Trash2, Pencil, Zap } from "lucide-react";
 import { useDeleteCommand, useIncrementUsage, useToggleFavorite } from "@/hooks/useCommandsQueries";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export function CommandCard({ cmd, onEdit }) {
   const [copied, setCopied] = useState(false);
@@ -13,6 +25,9 @@ export function CommandCard({ cmd, onEdit }) {
       await navigator.clipboard.writeText(cmd.command);
       setCopied(true);
       inc.mutate(cmd.id);
+      toast("Command copied to clipboard! 📋", {
+        description: cmd.title,
+      });
       setTimeout(() => setCopied(false), 1500);
     } catch {}
   }
@@ -78,15 +93,33 @@ export function CommandCard({ cmd, onEdit }) {
         >
           <Pencil className="h-4 w-4" />
         </button>
-        <button
-          onClick={() => {
-            if (confirm(`Delete "${cmd.title}"?`)) del.mutate(cmd.id);
-          }}
-          className="p-2 rounded-lg border border-border hover:bg-destructive/20 hover:text-destructive transition"
-          aria-label="Delete"
-        >
-          <Trash2 className="h-4 w-4" />
-        </button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <button
+              className="p-2 rounded-lg border border-border hover:bg-destructive/20 hover:text-destructive transition"
+              aria-label="Delete"
+            >
+              <Trash2 className="h-4 w-4" />
+            </button>
+          </AlertDialogTrigger>
+          <AlertDialogContent className="glass-card border-primary/50 shadow-[0_0_30px_var(--color-glow)] text-foreground">
+            <AlertDialogHeader>
+              <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
+              <AlertDialogDescription className="text-muted-foreground">
+                Are you sure you want to vaporize "{cmd.title}" into the void? This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel className="bg-muted text-muted-foreground border-none hover:bg-muted/80">Abort</AlertDialogCancel>
+              <AlertDialogAction
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                onClick={() => del.mutate(cmd.id)}
+              >
+                Vaporize
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
