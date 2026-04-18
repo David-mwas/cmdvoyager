@@ -1,5 +1,5 @@
-import { Outlet, createRootRouteWithContext, HeadContent, Scripts, Link } from "@tanstack/react-router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Outlet, createRootRouteWithContext, HeadContent, Link } from "@tanstack/react-router";
+import { QueryClient } from "@tanstack/react-query";
 import appCss from "../styles.css?url";
 import { Navbar } from "@/components/Navbar";
 
@@ -14,9 +14,7 @@ function NotFoundComponent() {
         <div className="text-6xl mb-2">🌌</div>
         <h1 className="text-5xl font-bold text-gradient">404</h1>
         <h2 className="mt-3 text-xl font-semibold">Lost in space</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          This sector of the galaxy doesn't exist.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">This sector of the galaxy doesn't exist.</p>
         <div className="mt-6">
           <Link
             to="/"
@@ -47,35 +45,20 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     ],
     links: [{ rel: "stylesheet", href: appCss }],
   }),
-  shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
 });
 
-function RootShell({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en" className="dark">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  );
-}
-
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
+      <HeadContent />
       <div className="relative z-10 min-h-screen">
         <Navbar />
         <main className="mx-auto max-w-7xl px-4 sm:px-6 py-8">
           <Outlet />
         </main>
       </div>
-    </QueryClientProvider>
+    </>
   );
 }

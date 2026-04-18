@@ -1,9 +1,8 @@
 import { api } from "@/lib/api";
 
-// Normalize backend → frontend
 const mapCommand = (c) => ({
   ...c,
-  id: c._id,
+  id: c.id ?? c._id,
 });
 
 export async function getCommands() {
@@ -31,13 +30,14 @@ export async function deleteCommand(id) {
   return { id };
 }
 
-// unified interaction
 export async function interactWithCommand(id, type) {
   const data = await api.post(`/commands/${id}/interact`, { type });
+  if (data?.command) {
+    return { ...data, command: mapCommand(data.command) };
+  }
   return mapCommand(data);
 }
 
-// XP derived from usage
 export function getXP(commands = []) {
   return commands.reduce((s, c) => s + (c.usageCount || 0), 0);
 }
