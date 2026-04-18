@@ -2,7 +2,30 @@ import { useEffect, useState } from "react";
 import { X, Plus } from "lucide-react";
 import { useAddCommand, useUpdateCommand } from "@/hooks/useCommandsQueries";
 
-const CATEGORIES = ["Git", "Docker", "Linux", "NPM", "Database", "Other"];
+const CATEGORIES = [
+  "Alpine", "Android", "Angular", "Ansible", "Apache", "Arch Linux", "Arduino",
+  "AWS", "Azure", "Babel", "Bash", "Bitbucket", "Blender", "Bun", "C", "C++",
+  "C#", "Cargo", "Cassandra", "CentOS", "CI/CD", "CircleCI", "Clojure", "Cloudflare",
+  "CMake", "CocoaPods", "Composer", "Conda", "Consul", "CouchDB", "CSS", "Cypress",
+  "Dart", "Database", "Debian", "Deno", "DigitalOcean", "Django", "Docker", "Dotnet",
+  "DynamoDB", "Eclipse", "Elasticsearch", "Elixir", "Elm", "Emacs", "Ember", "Erlang",
+  "ESLint", "Express", "Fastify", "Fedora", "Figma", "Firebase", "Flask", "Flutter",
+  "Frontend", "Gatsby", "GCP", "Git", "GitHub Actions", "GitLab CI", "Go", "Gradle",
+  "GraphQL", "gRPC", "Gulp", "Haskell", "Helm", "Heroku", "Homebrew", "HTML", "Hugo",
+  "Insomnia", "iOS", "Java", "JavaScript", "Jenkins", "Jest", "Jira", "jQuery", "Julia",
+  "Kafka", "Kotlin", "Kubernetes", "Laravel", "Linux", "Lua", "MacOS", "Make",
+  "MariaDB", "Maven", "Memcached", "Meteor", "MongoDB", "MySQL", "Nano", "Neo4j",
+  "NestJS", "Networking", "Next.js", "Nginx", "Nix", "Node.js", "NPM", "Nuxt",
+  "Objective-C", "OCaml", "OpenShift", "OpenStack", "Oracle", "PHP", "Pip", "PNPM",
+  "Podman", "PostgreSQL", "Postman", "PowerShell", "Prettier", "Prisma", "Prometheus",
+  "Puppeteer", "Python", "R", "RabbitMQ", "React", "React Native", "Redis", "Redux",
+  "Rollup", "Ruby", "Ruby on Rails", "Rust", "RxJS", "SASS", "Scala", "Security",
+  "Selenium", "Serverless", "Shell", "Snowpack", "Solr", "Spring Boot", "SQL",
+  "SQLite", "Supabase", "Svelte", "SVN", "Swift", "Symfony", "Tailwind", "Terraform",
+  "Tmux", "Tomcat", "TravisCI", "TypeScript", "Ubuntu", "Unity", "Vagrant", "Vercel",
+  "Vim", "Vite", "Vitest", "Vue", "Webpack", "WebRTC", "Windows", "WordPress",
+  "Xcode", "Yarn", "Zsh", "Other"
+];
 
 export function CommandModal({ open, onClose, editing }) {
   const add = useAddCommand();
